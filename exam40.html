@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#101827">
+    <title>Web Programming · สอบกลางภาค 40 ข้อ</title>
+    <style>
+        :root {
+            --bg: #f3f5fa;
+            --ink: #192236;
+            --muted: #738096;
+            --line: #e4e8f0;
+            --blue: #385df5;
+            --mint: #1db697
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 16px/1.65 system-ui, -apple-system, "Noto Sans Thai", sans-serif
+        }
+
+        .hero {
+            background: #101827;
+            color: #fff;
+            padding: 34px 20px 62px
+        }
+
+        .top,
+        .wrap {
+            max-width: 920px;
+            margin: auto
+        }
+
+        .brand {
+            font-size: 12px;
+            color: #aab7ff;
+            letter-spacing: .1em;
+            font-weight: 800
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.2;
+            margin: 12px 0
+        }
+
+        .hero p {
+            color: #bdc7d8;
+            margin: 0
+        }
+
+        .wrap {
+            padding: 0 16px 60px;
+            margin-top: -32px
+        }
+
+        .panel,
+        .q {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            box-shadow: 0 10px 32px #1620330b
+        }
+
+        .panel {
+            padding: 20px 23px;
+            margin-bottom: 16px
+        }
+
+        .meta {
+            display: grid;
+            grid-template-columns: 1fr 260px;
+            align-items: end;
+            gap: 20px
+        }
+
+        .field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px
+        }
+
+        .field input {
+            width: 100%;
+            border: 1px solid #d7ddea;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font: inherit
+        }
+
+        .progress {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 700
+        }
+
+        .bar {
+            height: 7px;
+            background: #e9edf5;
+            border-radius: 8px;
+            margin-top: 7px;
+            overflow: hidden
+        }
+
+        .bar span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--blue), var(--mint));
+            transition: .2s
+        }
+
+        .note {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 12px 0 0
+        }
+
+        .q {
+            padding: 20px 22px;
+            margin: 13px 0
+        }
+
+        .head {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start
+        }
+
+        .num {
+            background: #eef1ff;
+            color: var(--blue);
+            border-radius: 8px;
+            padding: 1px 8px;
+            font-weight: 850;
+            font-size: 13px
+        }
+
+        .title {
+            margin: 0 0 3px;
+            font-weight: 740
+        }
+
+        .topic {
+            font-size: 11px;
+            color: #7d88a1;
+            font-weight: 750;
+            letter-spacing: .04em
+        }
+
+        .hint {
+            margin: 8px 0 8px 40px;
+            color: #8791a3;
+            font-size: 12px
+        }
+
+        .choices {
+            display: grid;
+            gap: 7px;
+            margin: 12px 0 0 40px
+        }
+
+        .choice {
+            display: flex;
+            gap: 10px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 9px 11px;
+            cursor: pointer;
+            line-height: 1.5
+        }
+
+        .choice:hover {
+            background: #f7f8ff;
+            border-color: #bac7ff
+        }
+
+        .choice:has(input:checked) {
+            background: #f2f4ff;
+            border-color: #90a4ff
+        }
+
+        .choice input {
+            accent-color: var(--blue);
+            margin-top: 5px
+        }
+
+        .code {
+            font: .91em ui-monospace, SFMono-Regular, Menlo, monospace;
+            background: #f0f2f7;
+            padding: 2px 5px;
+            border-radius: 5px
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            position: sticky;
+            bottom: 8px;
+            padding: 8px 0;
+            background: #f3f5fae8;
+            backdrop-filter: blur(8px)
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 11px 17px;
+            font-weight: 750
+        }
+
+        .primary {
+            background: var(--blue);
+            color: #fff;
+            border: 0
+        }
+
+        .secondary {
+            background: #fff;
+            border: 1px solid var(--line);
+            color: #4f5b72
+        }
+
+        .result {
+            display: none;
+            background: #101827;
+            color: #fff;
+            border-radius: 16px;
+            padding: 22px;
+            margin-top: 17px
+        }
+
+        .result.show {
+            display: block
+        }
+
+        .score {
+            font-size: 32px;
+            font-weight: 850
+        }
+
+        .review {
+            display: grid;
+            gap: 7px;
+            margin-top: 15px
+        }
+
+        .review div {
+            padding: 9px 11px;
+            border: 1px solid #ffffff1c;
+            border-radius: 9px;
+            background: #ffffff08;
+            font-size: 14px
+        }
+
+        .ok {
+            color: #58e0b9
+        }
+
+        .wrong {
+            color: #ffb4a8
+        }
+
+        .muted {
+            color: #c2cbdb
+        }
+
+        .foot {
+            text-align: center;
+            color: #818b9e;
+            font-size: 12px;
+            padding-top: 19px
+        }
+
+        @media(max-width:620px) {
+            .hero {
+                padding: 27px 18px 54px
+            }
+
+            .meta {
+                grid-template-columns: 1fr
+            }
+
+            .panel {
+                padding: 17px
+            }
+
+            .q {
+                padding: 17px 14px
+            }
+
+            .choices,
+            .hint {
+                margin-left: 0
+            }
+        }
+
+        .summary-page {
+            display: none
+        }
+
+        .summary-page.show {
+            display: block
+        }
+
+        .summary-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .summary-head h2 {
+            margin: 0
+        }
+
+        .table-wrap {
+            overflow: auto;
+            margin-top: 14px
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 500px;
+            background: #fff
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        th {
+            font-size: 13px;
+            color: #66728a;
+            background: #f7f8fc
+        }
+
+        .summary-stat {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 8px 0 0
+        }
+
+        .mini-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .mini-actions button {
+            padding: 8px 12px;
+            font-size: 13px
+        }
+
+        .summary-empty {
+            color: var(--muted);
+            padding: 24px;
+            text-align: center;
+            border: 1px dashed var(--line);
+            border-radius: 12px;
+            margin-top: 14px
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero">
+        <div class="top">
+            <div class="brand">WEB PROGRAMMING · PRACTICE EXAM</div>
+            <h1>แบบทดสอบ Web Programming</h1>
+            <p>40 ข้อ · HTML · CSS · PHP · ทราบคะแนนทันทีเมื่อส่งคำตอบ</p>
+        </div>
+    </header>
+    <main class="wrap">
+        <div id="examView">
+            <section class="panel">
+                <div class="meta">
+                    <div class="field"><label for="student">ชื่อผู้เข้าสอบ</label><input id="student"
+                            placeholder="พิมพ์ชื่อของคุณ" required autocomplete="name"></div>
+                    <div class="progress"><span id="progress">ตอบแล้ว 0 / 40 ข้อ</span>
+                        <div class="bar"><span id="bar"></span></div>
+                    </div>
+                </div>
+                <p class="note">ทุกข้อมีคะแนนเท่ากัน ข้อที่ระบุว่าเลือกได้หลายข้อจะได้คะแนนเมื่อเลือกชุดคำตอบถูกครบถ้วน
+                </p><button class="secondary" type="button" id="openSummary">ดูหน้าสรุปคะแนนผู้สอบ</button>
+            </section>
+            <form id="quiz"></form>
+            <div class="actions"><button class="primary" id="submit" type="button">ส่งคำตอบและดูคะแนน</button><button
+                    class="secondary" id="reset" type="button">เริ่มทำใหม่</button></div>
+            <section id="result" class="result" aria-live="polite"></section>
+        </div>
+        <section id="summaryPage" class="summary-page">
+            <div class="panel">
+                <div class="summary-head">
+                    <div>
+                        <h2>สรุปผลการสอบ</h2>
+                        <p class="summary-stat" id="summaryStats"></p>
+                    </div>
+                    <div class="mini-actions"><button class="secondary" type="button" id="exportCsv">ดาวน์โหลด
+                            CSV</button><button class="primary" type="button" id="backToExam">กลับไปหน้าข้อสอบ</button>
+                    </div>
+                </div>
+                <div id="summaryContent"></div>
+            </div>
+        </section>
+        <div class="foot">รายชื่อและคะแนนเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น หากสอบคนละเครื่องจะไม่เห็นผลรวมกัน</div>
+    </main>
+    <script>
+        const Q = [
+            { t: 'HTML', q: 'ภาษา HTML มีหน้าที่หลักอย่างไรในการสร้างเว็บไซต์?', o: ['กำหนดสีและแบบอักษร', 'สร้างโครงสร้างและเนื้อหาของหน้าเว็บ', 'จัดเก็บข้อมูลในฐานข้อมูล', 'ประมวลผลคำสั่งบนเซิร์ฟเวอร์'], a: [1] },
+            { t: 'HTML', q: 'องค์ประกอบใดอยู่ในส่วนเนื้อหาที่แสดงบนหน้าเว็บ?', o: ['<head>', '<title>', '<body>', '<meta>'], a: [2] },
+            { t: 'HTML', q: 'แท็ก <title> ใช้ทำอะไร?', o: ['กำหนดหัวเรื่องในแถบชื่อหรือแท็บเบราว์เซอร์', 'สร้างหัวเรื่องใหญ่ในหน้าเว็บ', 'แสดงรูปภาพ', 'ขึ้นบรรทัดใหม่'], a: [0] },
+            { t: 'HTML', q: 'แท็กใดใช้สร้างย่อหน้า?', o: ['<p>', '<br>', '<hr>', '<li>'], a: [0] },
+            { t: 'HTML', q: 'แท็ก <br> มีผลอย่างไร?', o: ['สร้างเส้นคั่นเนื้อหา', 'ขึ้นบรรทัดใหม่', 'ทำตัวหนา', 'สร้างย่อหน้าใหม่พร้อมระยะห่าง'], a: [1] },
+            { t: 'HTML', q: 'ข้อใดเป็นคุณสมบัติจำเป็นของแท็ก <img>?', o: ['href และ target', 'src และ alt', 'width และ height', 'class และ id'], a: [1] },
+            { t: 'HTML', q: 'ต้องการสร้างรายการแบบมีลำดับตัวเลข ควรใช้แท็กใด?', o: ['<ul>', '<ol>', '<li>', '<dl>'], a: [1] },
+            { t: 'HTML', q: 'แท็กใดใช้กำหนดแถวในตาราง HTML?', o: ['<td>', '<th>', '<tr>', '<table-row>'], a: [2] },
+            { t: 'CSS', q: 'CSS มีหน้าที่หลักอย่างไร?', o: ['กำหนดรูปแบบและการแสดงผลขององค์ประกอบ HTML', 'สร้างฐานข้อมูล', 'แทนที่ HTML ทั้งหมด', 'รับข้อมูลจากฟอร์ม'], a: [0] },
+            { t: 'CSS', q: 'โครงสร้างพื้นฐานของ CSS rule ประกอบด้วยส่วนใด?', o: ['Selector และ Declaration', 'Table และ Row', 'Form และ Input', 'Key และ Value เท่านั้น'], a: [0] },
+            { t: 'CSS', q: 'ถ้าต้องการกำหนดสีตัวอักษรให้ย่อหน้าเป็นสีน้ำเงิน ข้อใดถูกต้อง?', o: ['p { color: blue; }', 'p { font-color: blue; }', 'p { text: blue; }', 'p { background: font blue; }'], a: [0] },
+            { t: 'CSS', q: 'ข้อใดกำหนดสีพื้นหลังของ body เป็นสีชมพูได้ถูกต้อง?', o: ['body { bg-color: pink; }', 'body { background-color: pink; }', 'body { color-background: pink; }', 'body { page-color: pink; }'], a: [1] },
+            { t: 'CSS', q: 'คำสั่งใดใช้กำหนดแบบอักษร Tahoma?', o: ['font-style: tahoma;', 'font-family: tahoma;', 'font-name: tahoma;', 'text-font: tahoma;'], a: [1] },
+            { t: 'CSS', q: 'margin: 25px 50px; หมายถึงค่าใด?', o: ['บนและล่าง 25px ซ้ายและขวา 50px', 'บน 25px ขวา 50px ล่าง 25px ซ้าย 50px', 'ทุกด้าน 25px', 'บน 50px ล่าง 25px ซ้ายขวา 0'], a: [0] },
+            { t: 'CSS', q: 'Selector แบบใดใช้เลือก element ที่มี class="bigtitle"?', o: ['#bigtitle', '.bigtitle', '@bigtitle', '$bigtitle'], a: [1] },
+            { t: 'CSS', q: 'Selector แบบใดใช้เลือก element ที่มี id="promotion"?', o: ['.promotion', '#promotion', 'promotion()', '*promotion'], a: [1] },
+            { t: 'PHP', q: 'PHP โดยทั่วไปทำงานที่ฝั่งใดก่อนส่งผลลัพธ์เป็นหน้าเว็บ?', o: ['ฝั่งเซิร์ฟเวอร์', 'ฝั่งเครื่องพิมพ์', 'เฉพาะในฐานข้อมูล', 'เฉพาะในเบราว์เซอร์โดยไม่ใช้เซิร์ฟเวอร์'], a: [0] },
+            { t: 'PHP', q: 'แท็กใดใช้เปิดส่วนคำสั่ง PHP?', o: ['<script>', '<?php', '<php>', '<?'], a: [1] },
+            { t: 'PHP', q: 'คำสั่ง echo ใช้ทำอะไร?', o: ['รับข้อมูลจากฟอร์ม', 'แสดงข้อความหรือผลลัพธ์ออกทางหน้าเว็บ', 'สร้างตัวแปร', 'เชื่อมต่อฐานข้อมูล'], a: [1] },
+            { t: 'PHP', q: 'สัญลักษณ์ใดใช้เริ่มต้นชื่อตัวแปร PHP?', o: ['#', '$', '@', '%'], a: [1] },
+            { t: 'PHP', q: 'ชื่อตัวแปรใดเขียนได้ถูกต้องตามกติกาพื้นฐานของ PHP?', o: ['$2score', '$student_name', '$student-name', '$student name'], a: [1] },
+            { t: 'PHP', q: 'เครื่องหมายใดใช้เชื่อมข้อความและตัวแปรเข้าด้วยกันใน PHP?', o: ['.', '&', '+', '::'], a: [0] },
+            { t: 'PHP', q: 'ถ้า $a = 10; $b = $a++; หลังทำงานแล้วค่าเป็นอย่างไร?', o: ['$a = 10, $b = 10', '$a = 11, $b = 10', '$a = 11, $b = 11', '$a = 10, $b = 11'], a: [1] },
+            { t: 'PHP', q: 'คำสั่ง if-else ทำงานอย่างไร?', o: ['ทำงานซ้ำตามจำนวนที่กำหนด', 'เลือกทำส่วน if เมื่อจริง หรือส่วน else เมื่อเท็จ', 'ประกาศฟังก์ชัน', 'เก็บข้อมูลเป็นชุด'], a: [1] },
+            { t: 'PHP', q: 'โครงสร้างใดตรวจสอบเงื่อนไขก่อนเข้าทำงานในแต่ละรอบ?', o: ['do-while', 'while', 'ทั้ง while และ for', 'ไม่มีข้อใด'], a: [2] },
+            { t: 'PHP', q: 'ข้อใดอธิบาย do-while ได้ถูกต้อง?', o: ['ตรวจเงื่อนไขก่อนทำเสมอ จึงอาจไม่ทำเลย', 'ทำคำสั่งอย่างน้อยหนึ่งรอบก่อนตรวจเงื่อนไข', 'ทำงานได้เพียงหนึ่งรอบเท่านั้น', 'ใช้ได้เฉพาะกับ array'], a: [1] },
+            { t: 'PHP', q: 'ดัชนีเริ่มต้นของ array แบบตัวเลขตามตัวอย่างในบทเรียนคือค่าใด?', o: ['-1', '0', '1', 'ขึ้นอยู่กับจำนวนสมาชิก'], a: [1] },
+            { t: 'PHP', q: 'ตัวแปร superglobal ใดรับค่าที่ส่งมาด้วย method GET?', o: ['$_POST', '$_GET', '$_FORM', '$_INPUT'], a: [1] },
+            { t: 'PHP', q: 'ฟังก์ชัน isset ใช้ตรวจสอบสิ่งใด?', o: ['ว่าตัวแปรถูกกำหนดและมีอยู่หรือไม่', 'แปลงข้อความเป็นวันที่', 'เรียง array', 'เชื่อมต่อ MySQL'], a: [0] },
+            { t: 'PHP', q: 'คำสั่ง return ในฟังก์ชันมีหน้าที่ใด?', o: ['ส่งค่ากลับจากฟังก์ชัน', 'แสดงข้อความโดยตรงเท่านั้น', 'วนซ้ำคำสั่ง', 'รับค่า POST'], a: [0] },
+            { t: 'HTML', q: 'แท็กใดใช้สร้างลิงก์ไปยังหน้าเว็บอื่น?', o: ['<a>', '<img>', '<link-text>', '<href>'], a: [0] },
+            { t: 'HTML', q: 'ในแท็ก <a> attribute href ใช้ระบุอะไร?', o: ['สีของลิงก์', 'ปลายทางหรือ URL ของลิงก์', 'ข้อความสำรองของรูปภาพ', 'ตำแหน่งเปิดแท็บใหม่'], a: [1] },
+            { t: 'HTML', q: 'ต้องการสร้างรายการแบบไม่เรียงลำดับ (bullet list) ควรใช้แท็กใด?', o: ['<ol>', '<ul>', '<li>', '<table>'], a: [1] },
+            { t: 'HTML', q: 'แท็ก <form> ใช้สำหรับอะไร?', o: ['สร้างแบบฟอร์มรับข้อมูลจากผู้ใช้', 'สร้างตารางข้อมูล', 'กำหนดรูปแบบตัวอักษร', 'แสดงรูปภาพ'], a: [0] },
+            { t: 'CSS', q: 'แท็ก <style> ในเอกสาร HTML ใช้ทำอะไร?', o: ['ใส่คำสั่ง CSS สำหรับกำหนดรูปแบบหน้าเว็บ', 'แทรกภาพพื้นหลัง', 'สร้างรายการแบบมีลำดับ', 'รับค่าจากแบบฟอร์ม'], a: [0] },
+            { t: 'CSS', q: 'ใน CSS คำสั่ง margin: 25px 50px 75px; กำหนดค่าอย่างไร?', o: ['บน 25px, ซ้ายขวา 50px, ล่าง 75px', 'บนล่าง 25px, ซ้ายขวา 50px', 'บน 25px, ขวา 50px, ล่าง 75px, ซ้าย 0', 'ทุกด้าน 75px'], a: [0] },
+            { t: 'CSS', q: 'padding ใช้กำหนดระยะห่างส่วนใด?', o: ['ด้านนอกเส้นขอบ ระหว่าง element กับ element อื่น', 'ด้านในเส้นขอบ ระหว่างเนื้อหากับเส้นขอบ', 'ระยะห่างระหว่างบรรทัดเท่านั้น', 'ความหนาของเส้นขอบ'], a: [1] },
+            { t: 'CSS', q: 'รหัสสีแบบ HEX ใน CSS โดยทั่วไปเริ่มต้นด้วยสัญลักษณ์ใด?', o: ['#', '@', '%', '&'], a: [0] },
+            { t: 'PHP', q: 'สัญลักษณ์ใดใช้เขียน comment บรรทัดเดียวใน PHP?', o: ['//', '<!--', '##', '**'], a: [0] },
+            { t: 'PHP', q: 'ตามเนื้อหาในสไลด์ ข้อใดเปรียบเทียบ GET และ POST ได้ถูกต้อง?', o: ['GET แสดงข้อมูลใน URL ส่วน POST ไม่แสดงข้อมูลในแถบ URL', 'POST แสดงข้อมูลใน URL ส่วน GET ซ่อนข้อมูล', 'ทั้ง GET และ POST แสดงข้อมูลในชื่อแท็บ', 'ทั้ง GET และ POST ใช้ได้เฉพาะส่งรูปภาพ'], a: [0] },
+        ];
+        const form = document.querySelector('#quiz');
+        function safeText(s) { return s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;') }
+        Q.forEach((q, i) => { const box = document.createElement('section'); box.className = 'q'; box.innerHTML = `<div class="head"><span class="num">${String(i + 1).padStart(2, '0')}</span><div><p class="title">${safeText(q.q).replace(/(&lt;[^&]*?&gt;)/g, '<span class="code">$1</span>')}</p><span class="topic">${q.t}</span></div></div><div class="choices">${q.o.map((v, j) => `<label class="choice"><input type="radio" name="q${i}" value="${j}"><span>${safeText(v).replace(/(&lt;[^&]*?&gt;)/g, '<span class="code">$1</span>')}</span></label>`).join('')}</div>`; form.append(box) });
+        function update() { const n = Q.reduce((s, _, i) => s + (form.querySelector(`[name=q${i}]:checked`) ? 1 : 0), 0); document.querySelector('#progress').textContent = `ตอบแล้ว ${n} / ${Q.length} ข้อ`; document.querySelector('#bar').style.width = `${n / Q.length * 100}%`; document.querySelector('#result').classList.remove('show') }
+        form.addEventListener('change', update);
+        const RESULT_KEY = 'web-programming-exam40-results-v1';
+        function readResults() { try { return JSON.parse(localStorage.getItem(RESULT_KEY) || '[]') } catch { return [] } }
+        function renderSummary() { const records = readResults().sort((a, b) => b.submittedAt.localeCompare(a.submittedAt)); const avg = records.length ? Math.round(records.reduce((s, r) => s + r.score, 0) / records.length) : 0; document.querySelector('#summaryStats').textContent = `ส่งข้อสอบ ${records.length} ครั้ง · คะแนนเฉลี่ย ${records.length ? avg : 0} / 40`; const content = document.querySelector('#summaryContent'); if (!records.length) { content.innerHTML = '<div class="summary-empty">ยังไม่มีผลสอบบันทึกในเบราว์เซอร์นี้</div>'; return } content.innerHTML = `<div class="table-wrap"><table><thead><tr><th>ลำดับ</th><th>ชื่อผู้สอบ</th><th>คะแนน</th><th>คิดเป็น</th><th>เวลาที่ส่ง</th></tr></thead><tbody>${records.map((r, i) => `<tr><td>${i + 1}</td><td>${safeText(r.name)}</td><td><strong>${r.score} / 40</strong></td><td>${Math.round(r.score / 40 * 100)}%</td><td>${new Intl.DateTimeFormat('th-TH', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Bangkok' }).format(new Date(r.submittedAt))}</td></tr>`).join('')}</tbody></table></div>` }
+        document.querySelector('#openSummary').addEventListener('click', () => { renderSummary(); document.querySelector('#examView').style.display = 'none'; document.querySelector('#summaryPage').classList.add('show'); window.scrollTo({ top: 0, behavior: 'smooth' }) });
+        document.querySelector('#backToExam').addEventListener('click', () => { document.querySelector('#summaryPage').classList.remove('show'); document.querySelector('#examView').style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' }) });
+        document.querySelector('#exportCsv').addEventListener('click', () => { const records = readResults().sort((a, b) => b.submittedAt.localeCompare(a.submittedAt)); const quote = x => '"' + String(x).replaceAll('"', '""') + '"'; const rows = [['ชื่อผู้สอบ', 'คะแนน', 'คะแนนเต็ม', 'เปอร์เซ็นต์', 'เวลาที่ส่ง'], ...records.map(r => [r.name, r.score, 40, Math.round(r.score / 40 * 100), new Intl.DateTimeFormat('th-TH', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Bangkok' }).format(new Date(r.submittedAt))])]; const blob = new Blob(['\ufeff' + rows.map(row => row.map(quote).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'ผลสอบ-web-programming.csv'; a.click(); URL.revokeObjectURL(url) });
+        document.querySelector('#submit').addEventListener('click', () => { const name = document.querySelector('#student').value.trim(); if (!name) { alert('กรุณากรอกชื่อผู้เข้าสอบก่อนส่งคำตอบ'); document.querySelector('#student').focus(); return } const unanswered = Q.map((_, i) => i).filter(i => !form.querySelector(`[name=q${i}]:checked`)); if (unanswered.length) { alert(`ยังตอบไม่ครบ ${unanswered.length} ข้อ กรุณาตอบให้ครบก่อนส่งคำตอบ`); document.querySelectorAll('.q').forEach((e, i) => e.style.borderColor = unanswered.includes(i) ? '#e99d92' : ''); document.querySelector('.q').scrollIntoView({ behavior: 'smooth', block: 'center' }); return } let score = 0; const rows = Q.map((q, i) => { const chosen = +form.querySelector(`[name=q${i}]:checked`).value, ok = chosen === q.a[0]; if (ok) score++; return `<div><strong class="${ok ? 'ok' : 'wrong'}">ข้อ ${i + 1} · ${ok ? 'ถูก' : 'ยังไม่ถูก'}</strong>${ok ? '' : `<br><span class="muted">คำตอบที่ถูก: ${safeText(q.o[q.a[0]])}</span>`}</div>` }); const submittedAt = new Date().toISOString(); const records = readResults(); records.push({ name, score, submittedAt }); localStorage.setItem(RESULT_KEY, JSON.stringify(records)); const r = document.querySelector('#result'); r.innerHTML = `<div>ผลคะแนนของ ${safeText(name)}</div><div class="score">${score} <span class="muted" style="font-size:17px">/ 40 คะแนน</span> <span class="muted" style="font-size:15px">(${Math.round(score / 40 * 100)}%)</span></div><p class="muted">${score === 40 ? 'ยอดเยี่ยม ตอบถูกครบทุกข้อ' : score >= 24 ? 'ทำได้ดี ตรวจทานข้อที่พลาดได้ด้านล่าง' : 'ทบทวนหัวข้อที่พลาดแล้วลองทำใหม่ได้'}</p><div class="review"><strong>เฉลยและสรุปคำตอบ</strong>${rows.join('')}</div>`; r.classList.add('show'); r.scrollIntoView({ behavior: 'smooth', block: 'start' }); document.querySelectorAll('.q').forEach(e => e.style.borderColor = '') });
+        document.querySelector('#reset').addEventListener('click', () => { form.reset(); document.querySelector('#student').value = ''; document.querySelectorAll('.q').forEach(e => e.style.borderColor = ''); document.querySelector('#result').classList.remove('show'); update(); window.scrollTo({ top: 0, behavior: 'smooth' }) });
+    </script>
+</body>
+
+</html>
